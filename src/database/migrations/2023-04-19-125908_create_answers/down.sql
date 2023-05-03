@@ -1,0 +1,3 @@
+DROP TABLE answers CASCADE;
+-- DROP PUBLICATION answers CASCADE;
+

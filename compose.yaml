@@ -5,7 +5,6 @@ version: "3.1"
 # 11,$s/SECRET_KEY="*.*"/SECRET_KEY=""
 #
 # Replace all the database credentials
-# 9s/entity/answers/g
 # 11,$s/base:base@database\/base/answers:answers@database\/answers/g
 
 services:

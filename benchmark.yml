@@ -44,4 +44,42 @@ plan:
       headers:
         Accept: application/json
     tags: [ health ]
+
+  - name: Post Index
+    request:
+      method: POST
+      url: '/api/v1/answer'
+      headers:
+        Accept: application/json
+        Authorization: Bearer {{ TOKEN }}
+        Content-Type: application/json
+      body: '{ "question_id": {{ iteration }}, "answer": "{{ iteration }}" }'
+    tags: [ post ]
+
+  - name: Get Index
+    request:
+      url: '/api/v1/answer'
+      headers:
+        Accept: application/json
+        Authorization: Bearer {{ TOKEN }}
+    tags: [ index ]
+
+  - name: Get Show
+    request:
+      url: '/api/v1/answer/{{ iteration }}'
+      headers:
+        Accept: application/json
+        Authorization: Bearer {{ TOKEN }}
+    tags: [ show ]
+
+  - name: Put Show
+    request:
+      method: PUT
+      url: '/api/v1/answer/{{ iteration }}'
+      headers:
+        Accept: application/json
+        Authorization: Bearer {{ TOKEN }}
+        Content-Type: application/json
+      body: '{ "question_id": {{ iteration }}, "answer": "{{ iteration }}" }'
+    tags: [ put ]
 ---

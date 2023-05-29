@@ -19,3 +19,15 @@ pub async fn put_update_admin(db: Db, _admin: UserInClaims, id: i32, new_answer:
         },
     }
 }
+
+pub async fn put_update_multi_admin(db: &Db, _admin: UserInClaims, new_answers: Vec<Answer>) -> Result<Json<Vec<Answer>>, Status> {
+    let answers = answers_repository::update_multi(db, new_answers).await;
+
+    match answers {
+        Ok(answers) => Ok(Json(answers)),
+        Err(_) => {
+            println!("Error: put_update_multi_admin; Answers not updated.");
+            Err(Status::InternalServerError)
+        },
+    }
+}

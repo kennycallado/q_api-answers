@@ -57,3 +57,23 @@ pub async fn update(db: &Db, id: i32, new_answer: NewAnswer) -> Result<Answer, d
 
     answer
 }
+
+pub async fn update_multi(db: &Db, new_answers: Vec<Answer>) -> Result<Vec<Answer>, diesel::result::Error> {
+    let ids = new_answers.iter().map(|answer| answer.id).collect::<Vec<i32>>();
+
+    let answers = db.run(move |conn| {
+        for answer in new_answers.into_iter() {
+            let id = answer.id;
+            let new_answer = NewAnswer::from(answer);
+
+            diesel::update(answers::table.find(id))
+                .set(&new_answer)
+                .execute(conn)
+                .expect("Error updating answer");
+        }
+
+        answers::table.filter(answers::id.eq_any(ids)).load::<Answer>(conn)
+    }).await;
+
+    answers
+}

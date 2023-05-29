@@ -24,6 +24,8 @@ pub fn routes() -> Vec<rocket::Route> {
         post_create_multiple_none,
         put_update,
         put_update_none,
+        put_update_multiple,
+        put_update_multiple_none,
     ]
 }
 
@@ -121,7 +123,7 @@ pub async fn post_create_multiple_none(_new_answers: Json<Vec<NewAnswer>>) -> St
     Status::Unauthorized
 }
 
-#[put("/<id>", data = "<new_answer>", rank = 1)]
+#[put("/<id>", data = "<new_answer>", rank = 101)]
 pub async fn put_update(db: Db, claims: AccessClaims, id: i32, new_answer: Json<NewAnswer>) -> Result<Json<Answer>, Status> {
     match claims.0.user.role.name.as_str() {
         "admin" => update::put_update_admin(db, claims.0.user, id, new_answer.into_inner()).await,
@@ -132,7 +134,23 @@ pub async fn put_update(db: Db, claims: AccessClaims, id: i32, new_answer: Json<
     }
 }
 
-#[put("/<_id>", data = "<_new_answer>", rank = 2)]
+#[put("/<_id>", data = "<_new_answer>", rank = 102)]
 pub async fn put_update_none(_id: i32, _new_answer: Json<NewAnswer>) -> Status {
+    Status::Unauthorized
+}
+
+#[put("/multiple", data = "<new_answers>", rank = 1)]
+pub async fn put_update_multiple(db: Db, claims: AccessClaims, new_answers: Json<Vec<Answer>>) -> Result<Json<Vec<Answer>>, Status> {
+    match claims.0.user.role.name.as_str() {
+        "admin" => update::put_update_multi_admin(&db, claims.0.user, new_answers.into_inner()).await,
+        _ => {
+            println!("Error: put_update_multiple; Role not handled");
+            Err(Status::Unauthorized)
+        },
+    }
+}
+
+#[put("/multiple", data = "<_new_answers>", rank = 2)]
+pub async fn put_update_multiple_none(_new_answers: Json<Vec<Answer>>) -> Status {
     Status::Unauthorized
 }

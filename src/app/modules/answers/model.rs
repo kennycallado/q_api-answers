@@ -17,3 +17,12 @@ pub struct NewAnswer {
     pub question_id: i32,
     pub answer: String,
 }
+
+impl From<Answer> for NewAnswer {
+    fn from(answer: Answer) -> Self {
+        NewAnswer {
+            question_id: answer.question_id,
+            answer: answer.answer,
+        }
+    }
+}

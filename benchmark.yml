@@ -75,13 +75,13 @@ plan:
   - name: Post Show multiple
     request:
       method: POST
-      url: '/api/v1/answer/multiple'
+      url: '/api/v1/answer/show/multiple'
       headers:
         Accept: application/json
         Authorization: Bearer {{ TOKEN }}
         Content-Type: application/json
-      body: '[ 1, 2 ]'
-    tags: [ multiple ]
+      body: '[ 1, {{ iteration }} ]'
+    tags: [ show-multiple ]
 
   - name: Put Show
     request:
@@ -93,4 +93,15 @@ plan:
         Content-Type: application/json
       body: '{ "question_id": {{ iteration }}, "answer": "{{ iteration }}" }'
     tags: [ put ]
+
+  - name: Put multiple
+    request:
+      method: PUT
+      url: '/api/v1/answer/multiple'
+      headers:
+        Accept: application/json
+        Authorization: Bearer {{ TOKEN }}
+        Content-Type: application/json
+      body: '[{ "id": {{ iteration }}, "question_id": {{ iteration }}, "answer": "{{ iteration }}" }]'
+    tags: [ put-multiple ]
 ---

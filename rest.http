@@ -45,12 +45,12 @@ GET http://localhost:8000/api/v1/answer/1
 Accept: application/json
 Authorization: Bearer 
 
-POST http://localhost:8000/api/v1/answer/multiple
+POST http://localhost:8000/api/v1/answer/show/multiple
 Accept: application/json
 Authorization: Bearer 
 Content-Type: application/json
 
-[ 1 ]
+[ 1, 3 ]
 
 POST http://localhost:8000/api/v1/answer
 Accept: application/json
@@ -75,5 +75,23 @@ Content-Type: application/json
 GET http://localhost:8000/api/v1/answer/6
 Accept: application/json
 Authorization: Bearer 
+
+PUT http://localhost:8000/api/v1/answer/multiple
+Accept: application/json
+Authorization: Bearer 
+Content-Type: application/json
+
+[
+  {
+    "id": 5,
+    "question_id": 2,
+    "answer": "4"
+  },
+  {
+    "id": 3,
+    "question_id": 1,
+    "answer": "6"
+  }
+]
 
 # }}}

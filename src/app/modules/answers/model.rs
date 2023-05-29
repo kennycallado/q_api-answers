@@ -8,8 +8,6 @@ pub struct Answer {
     pub id: i32,
     pub question_id: i32,
     pub answer: String
-    // pub created_at: NaiveDateTime,
-    // pub updated_at: NaiveDateTime,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize, Insertable, AsChangeset)]

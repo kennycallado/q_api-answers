@@ -19,3 +19,15 @@ pub async fn get_show_admin(db: Db, _admin: UserInClaims, id: i32) -> Result<Jso
         },
     }
 }
+
+pub async fn get_show_multi_admin(db: Db, _admin: UserInClaims, ids: Vec<i32>) -> Result<Json<Vec<Answer>>, Status> {
+    let answers = answers_repository::get_by_ids(&db, ids).await;
+
+    match answers {
+        Ok(answers) => Ok(Json(answers)),
+        Err(_) => {
+            println!("Error: get_show_multi_admin; Answers not obtained.");
+            Err(Status::NotFound)
+        },
+    }
+}

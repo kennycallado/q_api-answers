@@ -72,6 +72,17 @@ plan:
         Authorization: Bearer {{ TOKEN }}
     tags: [ show ]
 
+  - name: Post Show multiple
+    request:
+      method: POST
+      url: '/api/v1/answer/multiple'
+      headers:
+        Accept: application/json
+        Authorization: Bearer {{ TOKEN }}
+        Content-Type: application/json
+      body: '[ 1, 2 ]'
+    tags: [ multiple ]
+
   - name: Put Show
     request:
       method: PUT

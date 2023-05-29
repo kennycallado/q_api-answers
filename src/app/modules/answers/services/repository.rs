@@ -20,6 +20,14 @@ pub async fn get_by_id(db: &Db, id: i32) -> Result<Answer, diesel::result::Error
     answer
 }
 
+pub async fn get_by_ids(db: &Db, ids: Vec<i32>) -> Result<Vec<Answer>, diesel::result::Error> {
+    let answers = db.run(move |conn| {
+        answers::table.filter(answers::id.eq_any(ids)).load::<Answer>(conn)
+    }).await;
+
+    answers
+}
+
 pub async fn create(db: &Db, new_answer: NewAnswer) -> Result<Answer, diesel::result::Error> {
     let answer = db.run(move |conn| {
         diesel::insert_into(answers::table)

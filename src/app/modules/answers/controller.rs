@@ -143,6 +143,7 @@ pub async fn put_update_none(_id: i32, _new_answer: Json<NewAnswer>) -> Status {
 pub async fn put_update_multiple(db: Db, claims: AccessClaims, new_answers: Json<Vec<Answer>>) -> Result<Json<Vec<Answer>>, Status> {
     match claims.0.user.role.name.as_str() {
         "admin" => update::put_update_multi_admin(&db, claims.0.user, new_answers.into_inner()).await,
+        "robot" => update::put_update_multi_admin(&db, claims.0.user, new_answers.into_inner()).await,
         _ => {
             println!("Error: put_update_multiple; Role not handled");
             Err(Status::Unauthorized)

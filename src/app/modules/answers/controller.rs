@@ -16,10 +16,12 @@ pub fn routes() -> Vec<rocket::Route> {
         get_index_none,
         get_show,
         get_show_none,
-        post_multiple,
-        post_multiple_none,
+        post_show_multiple,
+        post_show_multiple_none,
         post_create,
         post_create_none,
+        post_create_multiple,
+        post_create_multiple_none,
         put_update,
         put_update_none,
     ]
@@ -68,8 +70,8 @@ pub async fn get_show_none(_id: i32) -> Status {
     Status::Unauthorized
 }
 
-#[post("/multiple", data="<ids>", rank = 1)]
-pub async fn post_multiple(db: Db, claims: AccessClaims, ids: Json<Vec<i32>>) -> Result<Json<Vec<Answer>>, Status> {
+#[post("/show/multiple", data="<ids>", rank = 1)]
+pub async fn post_show_multiple(db: Db, claims: AccessClaims, ids: Json<Vec<i32>>) -> Result<Json<Vec<Answer>>, Status> {
     match claims.0.user.role.name.as_str() {
         "admin" => show::get_show_multi_admin(db, claims.0.user, ids.into_inner()).await,
         "robot" => show::get_show_multi_admin(db, claims.0.user, ids.into_inner()).await,
@@ -80,8 +82,8 @@ pub async fn post_multiple(db: Db, claims: AccessClaims, ids: Json<Vec<i32>>) ->
     }
 }
 
-#[post("/multiple", data="<_ids>", rank = 2)]
-pub async fn post_multiple_none(_ids: Json<Vec<i32>>) -> Status {
+#[post("/show/multiple", data="<_ids>", rank = 2)]
+pub async fn post_show_multiple_none(_ids: Json<Vec<i32>>) -> Status {
     Status::Unauthorized
 }
 
@@ -98,6 +100,24 @@ pub async fn post_create(db: Db, claims: AccessClaims, new_answer: Json<NewAnswe
 
 #[post("/", data = "<_new_answer>", rank = 2)]
 pub async fn post_create_none(_new_answer: Json<NewAnswer>) -> Status {
+    Status::Unauthorized
+}
+
+#[post("/multiple", data="<new_answers>", rank = 1)]
+pub async fn post_create_multiple(db: Db, claims: AccessClaims, new_answers: Json<Vec<NewAnswer>>) -> Result<Json<Vec<Answer>>, Status> {
+    match claims.0.user.role.name.as_str() {
+        "admin" => create::post_create_multi_admin(&db, claims.0.user, new_answers.into_inner()).await,
+        "robot" => create::post_create_multi_admin(&db, claims.0.user, new_answers.into_inner()).await,
+        _ => {
+            println!("Error: post_multiple; Role not handled");
+            Err(Status::Unauthorized)
+        },
+    }
+
+}
+
+#[post("/multiple", data="<_new_answers>", rank = 2)]
+pub async fn post_create_multiple_none(_new_answers: Json<Vec<NewAnswer>>) -> Status {
     Status::Unauthorized
 }
 

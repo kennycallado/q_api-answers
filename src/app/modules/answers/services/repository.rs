@@ -38,6 +38,16 @@ pub async fn create(db: &Db, new_answer: NewAnswer) -> Result<Answer, diesel::re
     answer
 }
 
+pub async fn create_multi(db: &Db, new_answers: Vec<NewAnswer>) -> Result<Vec<Answer>, diesel::result::Error> {
+    let answers = db.run(move |conn| {
+        diesel::insert_into(answers::table)
+            .values(&new_answers)
+            .get_results::<Answer>(conn)
+    }).await;
+
+    answers
+}
+
 pub async fn update(db: &Db, id: i32, new_answer: NewAnswer) -> Result<Answer, diesel::result::Error> {
     let answer = db.run(move |conn| {
         diesel::update(answers::table.find(id))

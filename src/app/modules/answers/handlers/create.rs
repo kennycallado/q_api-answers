@@ -19,3 +19,15 @@ pub async fn post_create_admin(db: Db, _admin: UserInClaims, new_answer: NewAnsw
         },
     }
 }
+
+pub async fn post_create_multi_admin(db: &Db, _admin: UserInClaims, new_answers: Vec<NewAnswer>) -> Result<Json<Vec<Answer>>, Status> {
+    let answers = answers_repository::create_multi(db, new_answers).await;
+
+    match answers {
+        Ok(answers) => Ok(Json(answers)),
+        Err(_) => {
+            println!("Error: post_create_multi_admin; Answers not created.");
+            Err(Status::InternalServerError)
+        },
+    }
+}

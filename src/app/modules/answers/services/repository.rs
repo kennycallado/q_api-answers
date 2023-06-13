@@ -1,7 +1,6 @@
 use diesel::prelude::*;
-// use diesel::sql_types::Timestamptz;
 
-use crate::config::database::Db;
+use crate::database::connection::Db;
 use crate::database::schema::answers;
 
 use crate::app::modules::answers::model::{Answer, NewAnswer};

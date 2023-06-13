@@ -2,10 +2,9 @@ use rocket::http::Status;
 use rocket::serde::json::Json;
 
 use crate::app::providers::guards::claims::AccessClaims;
-use crate::config::database::Db;
+use crate::database::connection::Db;
 
 use crate::app::modules::answers::handlers::{create, index, show, update};
-
 use crate::app::modules::answers::model::{Answer, NewAnswer};
 
 pub fn routes() -> Vec<rocket::Route> {

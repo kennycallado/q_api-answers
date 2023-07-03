@@ -28,7 +28,7 @@ pub fn routes() -> Vec<rocket::Route> {
 }
 
 #[options("/<_..>")]
-pub async fn option_all() -> Status {
+pub async fn options_all() -> Status {
     Status::Ok
 }
 

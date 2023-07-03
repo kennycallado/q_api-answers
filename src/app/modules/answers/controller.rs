@@ -9,8 +9,7 @@ use crate::app::modules::answers::model::{Answer, NewAnswer};
 
 pub fn routes() -> Vec<rocket::Route> {
     routes![
-        option_index,
-        option_show,
+        options_all,
         get_index,
         get_index_none,
         get_show,
@@ -28,16 +27,10 @@ pub fn routes() -> Vec<rocket::Route> {
     ]
 }
 
-#[options("/")]
-pub async fn option_index() -> Status {
+#[options("/<_..>")]
+pub async fn option_all() -> Status {
     Status::Ok
 }
-
-#[options("/<_id>")]
-pub async fn option_show(_id: i32) -> Status {
-    Status::Ok
-}
-
 
 #[get("/", rank = 1)]
 pub async fn get_index(db: Db, claims: AccessClaims) -> Result<Json<Vec<Answer>>, Status> {

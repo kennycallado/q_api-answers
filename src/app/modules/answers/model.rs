@@ -13,7 +13,7 @@ use rocket_db_pools::sqlx::FromRow;
 pub struct Answer {
     pub id: i32,
     pub question_id: i32,
-    pub answer: String
+    pub answer: String,
 }
 
 #[cfg_attr(feature = "db_diesel", derive(Insertable, AsChangeset))]

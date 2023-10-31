@@ -9,7 +9,12 @@ use crate::app::modules::answers::services::repository as answers_repository;
 use crate::app::providers::services::claims::UserInClaims;
 use crate::database::connection::Db;
 
-pub async fn put_update_admin(db: Connection<Db>, _admin: UserInClaims, id: i32, new_answer: NewAnswer) -> Result<Json<Answer>, Status> {
+pub async fn put_update_admin(
+    db: Connection<Db>,
+    _admin: UserInClaims,
+    id: i32,
+    new_answer: NewAnswer,
+) -> Result<Json<Answer>, Status> {
     let answer = answers_repository::update(db, id, new_answer).await;
 
     match answer {
@@ -17,11 +22,15 @@ pub async fn put_update_admin(db: Connection<Db>, _admin: UserInClaims, id: i32,
         Err(_) => {
             println!("Error: put_update_admin; Answer not updated.");
             Err(Status::InternalServerError)
-        },
+        }
     }
 }
 
-pub async fn put_update_multi_admin(db: Connection<Db>, _admin: UserInClaims, new_answers: Vec<Answer>) -> Result<Json<Vec<Answer>>, Status> {
+pub async fn put_update_multi_admin(
+    db: Connection<Db>,
+    _admin: UserInClaims,
+    new_answers: Vec<Answer>,
+) -> Result<Json<Vec<Answer>>, Status> {
     let answers = answers_repository::update_multi(db, new_answers).await;
 
     match answers {
@@ -29,6 +38,6 @@ pub async fn put_update_multi_admin(db: Connection<Db>, _admin: UserInClaims, ne
         Err(_) => {
             println!("Error: put_update_multi_admin; Answers not updated.");
             Err(Status::InternalServerError)
-        },
+        }
     }
 }

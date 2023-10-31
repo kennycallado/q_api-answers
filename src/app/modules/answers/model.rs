@@ -1,8 +1,14 @@
 use serde::{Deserialize, Serialize};
 
+#[cfg(feature = "db_diesel")]
 use crate::database::schema::answers;
 
-#[derive(Debug, Clone, Deserialize, Serialize, Queryable, Identifiable)]
+#[cfg(feature = "db_sqlx")]
+use rocket_db_pools::sqlx::FromRow;
+
+#[cfg_attr(feature = "db_diesel", derive(Queryable, Identifiable))]
+#[cfg_attr(feature = "db_sqlx", derive(FromRow))]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(crate = "rocket::serde")]
 pub struct Answer {
     pub id: i32,
@@ -10,8 +16,9 @@ pub struct Answer {
     pub answer: String
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize, Insertable, AsChangeset)]
-#[diesel(table_name = answers)]
+#[cfg_attr(feature = "db_diesel", derive(Insertable, AsChangeset))]
+#[cfg_attr(feature = "db_diesel", diesel(table_name = answers))]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(crate = "rocket::serde")]
 pub struct NewAnswer {
     pub question_id: i32,

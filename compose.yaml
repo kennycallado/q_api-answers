@@ -168,7 +168,7 @@ services:
   #   environment:
   #     - ROCKET_ADDRESS="0.0.0.0"
   #     - ROCKET_PORT=8000
-  #     - ROCKET_SECRET_KEY="nRX5pJX1iyooMrFm2ota0eKfShW8+Zptjns8+rGt4Rc="
+  #     - ROCKET_SECRET_KEY=""
   #     - ROCKET_DATABASES={questions={url="postgres://answers:answers@database/answers"}}
 
   #     - ROCKET_PROFILE_URL="http://profiles_api:8000/api/v1/profile/"

@@ -155,31 +155,32 @@ services:
   # }}}
 
   # {{{ answers
-  answers_api:
-    image: kennycallado/q-api-answers:latest
-    ports:
-      - "8012:8000"
-    
-    environment:
-      - ROCKET_ADDRESS="0.0.0.0"
-      - ROCKET_PORT=8000
-      - ROCKET_SECRET_KEY=""
-      - ROCKET_DATABASES={questions={url="postgres://base:base@database/answers"}}
+  # answers_api:
+  #   image: kennycallado/q-api-answers:latest
+  #   ports:
+  #     - "8012:8000"
+  #   expose:
+  #     - "8012:8000"
+  #   environment:
+  #     - ROCKET_ADDRESS="0.0.0.0"
+  #     - ROCKET_PORT=8000
+  #     - ROCKET_SECRET_KEY=""
+  #     - ROCKET_DATABASES={questions={url="postgres://answers:answers@database/answers"}}
 
-      - ROCKET_PROFILE_URL="http://profiles_api:8000/api/v1/profile/"
-      - ROCKET_USER_URL="http://users_api:8000/api/v1/user/"
-      - ROCKET_AUTH_URL="http://auth_api:8000/"
-      - ROCKET_MESSAGE_URL="http://messages_api:8000/api/v1/messaging/"
-      - ROCKET_QUESTION_URL="http://questions_api:8000/api/v1/question/"
-      - ROCKET_ANSWER_URL="http://answers_api:8000/api/v1/answer/"
-      - ROCKET_SLIDE_URL="http://slides_api:8000/api/v1/slide/"
-      - ROCKET_RESOURCE_URL="http://resources_api:8000/api/v1/resource/"
-      - ROCKET_PAPER_URL="http://papers_api:8000/api/v1/paper/"
-      - ROCKET_LOGIC_URL="http://logics_api:8000/api/v1/logic/"
-      - ROCKET_CHECKER_URL="http://checker_api:3000/api/v1/checker/"
-      - ROCKET_PROJECT_URL="http://projects_api:8000/api/v1/project/"
-    depends_on:
-      - questions_api
+  #     - ROCKET_PROFILE_URL="http://profiles_api:8000/api/v1/profile/"
+  #     - ROCKET_USER_URL="http://users_api:8000/api/v1/user/"
+  #     - ROCKET_AUTH_URL="http://auth_api:8000/"
+  #     - ROCKET_MESSAGE_URL="http://messages_api:8000/api/v1/messaging/"
+  #     - ROCKET_QUESTION_URL="http://questions_api:8000/api/v1/question/"
+  #     - ROCKET_ANSWER_URL="http://answers_api:8000/api/v1/answer/"
+  #     - ROCKET_SLIDE_URL="http://slides_api:8000/api/v1/slide/"
+  #     - ROCKET_RESOURCE_URL="http://resources_api:8000/api/v1/resource/"
+  #     - ROCKET_PAPER_URL="http://papers_api:8000/api/v1/paper/"
+  #     - ROCKET_LOGIC_URL="http://logics_api:8000/api/v1/logic/"
+  #     - ROCKET_CHECKER_URL="http://checker_api:3000/api/v1/checker/"
+  #     - ROCKET_PROJECT_URL="http://projects_api:8000/api/v1/project/"
+  #   depends_on:
+  #     - questions_api
   # }}}
 # }}}
 

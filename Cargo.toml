@@ -1,10 +1,10 @@
 [package]
 name = "q-api-answers"
-version = "0.1.6"
+version = "0.1.7"
 edition = "2021"
 
 [features]
-default   = ["db_diesel"]
+default   = ["db_sqlx"]
 
 cron      = ["db_diesel", "tokio-cron-scheduler", "reqwest", "escalon-jobs"]
 db_diesel = ["diesel", "diesel_migrations", "rocket_sync_db_pools", "openssl"]

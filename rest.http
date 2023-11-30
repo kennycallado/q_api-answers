@@ -58,6 +58,19 @@ Content-Type: application/json
   "answer": "5"
 }
 
+POST http://localhost:8000/api/v1/answer/multiple
+Accept: application/json
+Authorization: Bearer 
+Content-Type: application/json
+
+[{
+  "question_id": 1,
+  "answer": "5"
+},{
+  "question_id": 2,
+  "answer": "1"
+}]
+
 PUT http://localhost:8000/api/v1/answer/6
 Accept: application/json
 Authorization: Bearer 
